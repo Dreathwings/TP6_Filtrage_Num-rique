@@ -13,6 +13,7 @@ develop-eggs/
 downloads/
 eggs/
 .eggs/
+.spec
 lib/
 lib64/
 parts/
