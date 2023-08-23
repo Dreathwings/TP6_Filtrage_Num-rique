@@ -18,7 +18,7 @@ Cordialement
 Pas la direction""", 0)).run()
 
 path = os.getcwd()
-path = path.replace("dist",'UI.py')
+path = path.replace("dist\\TP6_Filtrage_Numérique",'UI.py')
 startupinfo = subprocess.STARTUPINFO()
 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 subprocess.run(["C:/ProgramData/radioconda/python.exe", path],startupinfo=startupinfo)
