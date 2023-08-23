@@ -3,7 +3,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
 develop-eggs/
 downloads/
 eggs/
@@ -27,7 +26,7 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
-
+.vscode
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
