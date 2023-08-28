@@ -1,5 +1,6 @@
 #!"C:\ProgramData\radioconda\python.exe"
 # -*- coding: utf-8 -*-
+# pyinstaller --icon=ressource\onde-sonore.ico TP6_Filtrage_Numérique.py
 import os
 import subprocess
 import threading
@@ -8,14 +9,16 @@ def Mbox(title, text, style):
     threading.Thread(
         target=lambda: ctypes.windll.user32.MessageBoxW(0, text, title, style)
     ).start()
-threading.Thread(target=Mbox('Information', 
-     """Faut attendre python c'est lent du cul,
-ça peux prendre jusqu'à 10 secondes si vous avez un grille pain,
-sinon relancer
+bob = threading.Thread(target=Mbox('Information', 
+"""Faut attendre python c'est lent,
+ça peut prendre jusqu'à 20 secondes si vous avez un grille-pain;
+sinon fermer puis relancer
 
 Cordialement 
 
-Pas la direction""", 0)).run()
+Pas la direction""", 0))
+bob.setDaemon(True)
+bob.run()
 
 path = os.getcwd()
 path = path.replace("dist\\TP6_Filtrage_Numérique",'UI.py')
