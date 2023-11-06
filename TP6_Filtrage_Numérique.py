@@ -10,7 +10,7 @@ path = os.getcwd()
 path = path.replace("dist\\TP6_Filtrage_Numérique", 'UI.py')
 startupinfo = subprocess.STARTUPINFO()
 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-subprocess.run(["C:/ProgramData/radioconda/python.exe", path],
+subprocess.run(["C:/Radioconda/python.exe", path],
                startupinfo=startupinfo)
 
 def Mbox(title, text, style):
