@@ -1,6 +1,7 @@
 #!"C:\ProgramData\radioconda\python.exe"
 # -*- coding: utf-8 -*-
 import os
+from unittest import skip
 from PyQt5 import QtWidgets, uic, QtCore, Qt # type: ignore
 from PyQt5.QtCore import pyqtSignal , QObject,pyqtSlot
 import math
@@ -26,9 +27,9 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         uic.loadUi(path_ui, self)
         self.setWindowTitle("TP6 Filtrage Numérique")
         self.ScreenState = 0
-        self.GBF_FREQ_SIGNAL = 100
-        self.GBF_AMP_SIGNAL = 1
-        self.GBF_FREQ_SCAN = 32000
+        self.GBF_FREQ_SIGNAL = 1000
+        self.GBF_AMP_SIGNAL = 0.001
+        self.GBF_FREQ_SCAN = 500000
         self.GBF_TYPE_SIGNAL="SINUS"
         self.GBF = GBF(self.GBF_TYPE_SIGNAL,self.GBF_FREQ_SIGNAL,self.GBF_AMP_SIGNAL,self.GBF_FREQ_SCAN)
         
@@ -39,7 +40,7 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         self.USRP_TIME_UI = GRAPH('SIGNAL/TIME')
         self.USRP_FREQ_UI = GRAPH('SIGNAL/FREQUENCE')
         
-        self.EMETTEUR = USRP('TX')
+        self.EMETTEUR = USRP('TX',self)
         self.Customer()
         
         self.stop()
@@ -91,7 +92,10 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
     def GBF_Freq_Scan(self): 
         self.GBF_FREQ_SCAN = self.SPIN_X_COMBO(self.Item_GBF_SCAN_BASE.value(),self.Item_GBF_SCAN_MULTIPLY.currentIndex())
         self.GBF.update(SAMPLE_RATE=self.GBF_FREQ_SCAN)
+        self.Usrp_Sample()
         self.GBF_TIME_UI.setSampleRate(self.GBF_FREQ_SCAN)
+        self.GBF_FREQ_UI.setSampleRate(self.GBF_FREQ_SCAN)
+
     def GBF_Type_Signal(self): 
         self.GBF_TYPE_SIGNAL = self.Item_GBF_TYPE_SIGNAL.currentText().upper()
         self.GBF.update(SHAPE=self.GBF_TYPE_SIGNAL)
@@ -114,11 +118,13 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         else:
             type = self.Item_FILTRE_FORWARD_SHAPE.currentText().upper()
         self.FILTRE.Forward_update(type,
-                                   self.SPIN_X_COMBO(self.Item_FILTRE_FORWARD_FREQ_H.value(),self.Item_FILTRE_FORWARD_FREQ_H_Multiply.currentIndex()),
-                                   self.SPIN_X_COMBO(self.Item_FILTRE_FORWARD_FREQ_L.value(),self.Item_FILTRE_FORWARD_FREQ_L_Multiply.currentIndex()),
-                                   self.SPIN_X_COMBO(self.Item_GBF_SCAN_BASE.value(),self.Item_GBF_SCAN_MULTIPLY.currentIndex()))
+                                self.SPIN_X_COMBO(self.Item_FILTRE_FORWARD_FREQ_H.value(),self.Item_FILTRE_FORWARD_FREQ_H_Multiply.currentIndex()),
+                                self.SPIN_X_COMBO(self.Item_FILTRE_FORWARD_FREQ_L.value(),self.Item_FILTRE_FORWARD_FREQ_L_Multiply.currentIndex()),
+                                self.SPIN_X_COMBO(self.Item_GBF_SCAN_BASE.value(),self.Item_GBF_SCAN_MULTIPLY.currentIndex()),
+                                self.SPIN_X_COMBO(self.Item_FILTRE_FORWARD_TRANSI.value(),self.Item_FILTRE_FORWARD_TRANSI_Multiply.currentIndex()))
         self.USRP_TIME_UI.GUI_SIGNAL.reset()
         self.PLOT_FORWARD.draw()
+           
     def Filtre_Feedback(self):
         if self.Item_FILTRE_FEEDBACK_MODE.currentIndex() == 1 and self.FILTRE.FEEDBACK_file !='':
             type ='FILE'
@@ -127,9 +133,11 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         self.FILTRE.Feedback_update(type,
                                    self.SPIN_X_COMBO(self.Item_FILTRE_FEEDBACK_FREQ_H.value(),self.Item_FILTRE_FEEDBACK_FREQ_H_Multiply.currentIndex()),
                                    self.SPIN_X_COMBO(self.Item_FILTRE_FEEDBACK_FREQ_L.value(),self.Item_FILTRE_FEEDBACK_FREQ_L_Multiply.currentIndex()),
-                                   self.SPIN_X_COMBO(self.Item_GBF_SCAN_BASE.value(),self.Item_GBF_SCAN_MULTIPLY.currentIndex()))
+                                   self.SPIN_X_COMBO(self.Item_GBF_SCAN_BASE.value(),self.Item_GBF_SCAN_MULTIPLY.currentIndex()),
+                                   self.SPIN_X_COMBO(self.Item_FILTRE_FEEDBACK_TRANSI.value(),self.Item_FILTRE_FEEDBACK_TRANSI_Multiply.currentIndex()))
         self.USRP_TIME_UI.GUI_SIGNAL.reset()
         self.PLOT_FEEDBACK.draw()
+
     def Filtre_Forward_FILE(self):
         url = QtCore.QUrl(os.path.dirname(os.path.realpath(__file__)))
         file , check = QtWidgets.QFileDialog().getOpenFileUrl(self, 'Open Filter Taps',url ,"Filter File (*.csv *.filter);;All Files (*)")
@@ -141,7 +149,6 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
             self.Item_FILTRE_FORWARD_FILE_BTN.setText(out)
             self.FILTRE.FORWARD_file = path
             self.Filtre_Forward()
-
 
     def Filtre_Feedback_FILE(self):
         url = QtCore.QUrl(os.path.dirname(os.path.realpath(__file__)))
@@ -157,7 +164,9 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
 
     def Usrp_Sample(self):
         if self.EMETTEUR.IsConnected:
-            self.USRP_SAMPLE = self.SPIN_X_COMBO(self.Item_USRP_SAMPLE_BASE.value(),self.Item_USRP_SAMPLE_MULTY.currentIndex())
+            self.USRP_SAMPLE = self.SPIN_X_COMBO(self.Item_GBF_SCAN_BASE.value(),self.Item_GBF_SCAN_MULTIPLY.currentIndex())
+            self.USRP_TIME_UI.setSampleRate(self.USRP_SAMPLE)
+            self.USRP_FREQ_UI.setSampleRate(self.USRP_SAMPLE)
             self.EMETTEUR.set_TX_sample_rate(self.USRP_SAMPLE)
 
     def Usrp_Porteuse(self):
@@ -171,31 +180,38 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
             self.EMETTEUR.set_TX_gain(self.USRP_GAIN)
 
     def Usrp_On_Off(self):
-
         if self.EMETTEUR.IsConnected:
             self.USRP_ON_OFF_STATE = self.Item_USRP_ON_OFF.checkState()
             if not self.USRP_ON_OFF_STATE:
                 print("[INFO] Enabling USRP")
                 self.EMETTEUR.set_On_Off(True)
+                
             else:
                 print("[INFO] Disabling USRP")
                 self.EMETTEUR.set_On_Off(False)
 
+    def Usrp_Reset(self):
+        print("[INFO] Reseting USRP")
+        print("[INFO] Disabling USRP")
+        
+        self.EMETTEUR.set_On_Off(False)
+        #self.disconnect(self.EMETTEUR.data_tank)# type: ignore
+        #del self.EMETTEUR.SINK # type: ignore
+        Usrp_label=self.getQLabel('USRP_LABEL')
+        Usrp_label.setStyleSheet("background: red;")
+
     #@pyqtSlot(name='USRP_Connect')
     def USRP_connect(self):
-        #self.stop()
-        #self.Connection()
-        self.connect((self.EMETTEUR.data_tank, 0), (self.EMETTEUR.USRP_TX, 0))# type: ignore
+        self.EMETTEUR.Sink_Connection()
+        self.connect((self.EMETTEUR.data_tank,0),(self.EMETTEUR.SINK,0)) # type: ignore
+        Usrp_label=self.getQLabel('USRP_LABEL')
+        Usrp_label.setStyleSheet("background:green;")
         self.Usrp_Sample()
         self.Usrp_Porteuse()
         self.Usrp_Gain()
-        self.EMETTEUR.USRP_TX.start()# type: ignore
-        #self.start()
-        """# type: ignore
-        self.EMETTEUR.copy.start()
-        self.EMETTEUR.converteur.start()
-        self.EMETTEUR.data_tank.start()"""
-        #print("[INFO] Connecting USRP to [",self.EMETTEUR.USRP_TX.get_usrp_info(self.EMETTEUR.TX_channel)['tx_antenna'],"]") # type: ignore
+        if self.EMETTEUR.board == 'NI2900':
+            self.EMETTEUR.SINK.start()# type: ignore
+            
             
     def Connection(self):
         self.connect((self.GBF.SIGNAL,0),(self.GBF.GBF_SELECTOR,0))
@@ -211,7 +227,7 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         
         self.connect((self.COPY_USRP_SINK,0),(self.USRP_FREQ_UI.GUI_SIGNAL,0))
         self.connect((self.COPY_USRP_SINK,0),(self.USRP_TIME_UI.GUI_SIGNAL,0))
-        self.connect((self.EMETTEUR.copy,0), (self.EMETTEUR.converteur, 0), (self.EMETTEUR.data_tank, 0))
+        self.connect((self.EMETTEUR.copy,0), (self.EMETTEUR.converteur, 0), (self.EMETTEUR.data_tank, 0)) # type: ignore
 
     def Customer(self):
         print('[INFO] INIT UI')
@@ -241,6 +257,8 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         self.Item_FILTRE_FORWARD_FREQ_H_Multiply = self.getQComboBox('FILTRE_FIR_FREQ_H_Multiply')
         self.Item_FILTRE_FORWARD_FREQ_L = self.getQDoubleSpin('FILTRE_FIR_FREQ_L')
         self.Item_FILTRE_FORWARD_FREQ_L_Multiply = self.getQComboBox('FILTRE_FIR_FREQ_L_Multiply')
+        self.Item_FILTRE_FORWARD_TRANSI = self.getQDoubleSpin('FILTRE_FIR_FREQ_TRANSI')
+        self.Item_FILTRE_FORWARD_TRANSI_Multiply = self.getQComboBox('FILTRE_FIR_FREQ_TRANSI_Multiply')
         self.Item_FILTRE_FORWARD_PLOT = self.getQGridLayout('FILTRE_FIR_PLOT')
         self.PLOT_FORWARD = self.FILTRE.get_forward_widget()
         self.Item_FILTRE_FORWARD_PLOT.addWidget(self.PLOT_FORWARD)
@@ -253,6 +271,8 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         self.Item_FILTRE_FEEDBACK_FREQ_H_Multiply = self.getQComboBox('FILTRE_IIR_FREQ_H_Multiply')
         self.Item_FILTRE_FEEDBACK_FREQ_L = self.getQDoubleSpin('FILTRE_IIR_FREQ_L')
         self.Item_FILTRE_FEEDBACK_FREQ_L_Multiply = self.getQComboBox('FILTRE_IIR_FREQ_L_Multiply')
+        self.Item_FILTRE_FEEDBACK_TRANSI = self.getQDoubleSpin('FILTRE_IIR_FREQ_TRANSI')
+        self.Item_FILTRE_FEEDBACK_TRANSI_Multiply = self.getQComboBox('FILTRE_IIR_FREQ_TRANSI_Multiply')
         self.Item_FILTRE_FEEDBACK_PLOT = self.getQGridLayout('FILTRE_IIR_PLOT')
         self.PLOT_FEEDBACK = self.FILTRE.get_feedback_widget()
         self.Item_FILTRE_FEEDBACK_PLOT.addWidget(self.PLOT_FEEDBACK)
@@ -298,6 +318,9 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
 
         self.Item_FILTRE_FORWARD_FREQ_L.valueChanged.connect(self.Filtre_Forward)
         self.Item_FILTRE_FORWARD_FREQ_L_Multiply.currentIndexChanged.connect(self.Filtre_Forward)
+
+        self.Item_FILTRE_FORWARD_TRANSI.valueChanged.connect(self.Filtre_Forward)
+        self.Item_FILTRE_FORWARD_TRANSI_Multiply.currentIndexChanged.connect(self.Filtre_Forward)
         ###########
         ###########
         self.Item_FILTRE_FEEDBACK_BTN.stateChanged.connect(self.Filtre_Feedback_On_Off)
@@ -311,6 +334,9 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
 
         self.Item_FILTRE_FEEDBACK_FREQ_L.valueChanged.connect(self.Filtre_Feedback)
         self.Item_FILTRE_FEEDBACK_FREQ_L_Multiply.currentIndexChanged.connect(self.Filtre_Feedback)
+
+        self.Item_FILTRE_FEEDBACK_TRANSI.valueChanged.connect(self.Filtre_Feedback)
+        self.Item_FILTRE_FEEDBACK_TRANSI_Multiply.currentIndexChanged.connect(self.Filtre_Feedback)
         ##########
 
         self.Item_USRP_PORTEUSE_BASE.valueChanged.connect(self.Usrp_Porteuse)
@@ -327,6 +353,16 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         self.EMETTEUR.SetupVar("SignalConnection",a)
         #print(self.EMETTEUR.SignalConnection)
         self.EMETTEUR.SignalConnection.closeApp.connect(self.USRP_connect) # type: ignore
+
+        self.GBF_TIME_UI.GUI_SIGNAL.enable_autoscale(True)# type: ignore
+        
+        self.USRP_TIME_UI.GUI_SIGNAL.enable_autoscale(True)# type: ignore
+
+        self.GBF_FREQ_UI.GUI_SIGNAL.set_y_axis(-125,0)
+        #self.GBF_TIME_UI.GUI_SIGNAL.set_y_axis(-100,0)
+        
+        self.USRP_FREQ_UI.GUI_SIGNAL.set_y_axis(-125,0)
+        #self.USRP_TIME_UI.GUI_SIGNAL.set_y_axis(-100,0)
 
         ##########
         #/// VARIABLE ETAT UI
@@ -348,10 +384,11 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
 
 
         self.Connection()
+        
         if self.EMETTEUR.IsConnected:
-            bob = 1
             self.USRP_connect()
         
+        self.EMETTEUR.IsConnected = True
         print("[INFO] Initialisation terminé")
 
     def keyPressEvent(self, event):

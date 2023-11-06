@@ -1,7 +1,5 @@
 #!"C:/ProgramData/radioconda/python.exe
-from flask.scaffold import F
 from gnuradio import qtgui
-from gnuradio import analog
 from PyQt5 import Qt # type: ignore
 import sip # type: ignore
 from gnuradio import gr
@@ -136,4 +134,7 @@ class GRAPH(gr.top_block):
         self.GUI_SIGNAL.set_frequency_range(self.CENTRE_FREQ,self.CENTRE_FREQ/2)
     def setSampleRate(self,freq):
         self.SAMPLE_RATE = freq
-        self.GUI_SIGNAL.set_samp_rate(self.SAMPLE_RATE)
+        if self.TYPE == 'SIGNAL/TIME':
+            self.GUI_SIGNAL.set_samp_rate(self.SAMPLE_RATE)
+        elif self.TYPE == 'SIGNAL/FREQUENCE':
+            self.GUI_SIGNAL.set_frequency_range(self.CENTRE_FREQ,self.SAMPLE_RATE*2)

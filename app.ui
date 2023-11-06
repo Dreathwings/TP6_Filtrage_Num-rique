@@ -91,9 +91,8 @@ QGridLayout#GRIDOU{border:1px solid black;}</string>
     </property>
     <property name="font">
      <font>
-      <family>ESSTIXFour</family>
+      <family>Arial</family>
       <pointsize>40</pointsize>
-      <weight>50</weight>
       <bold>false</bold>
       <strikeout>false</strikeout>
      </font>
@@ -119,10 +118,13 @@ border-radius: 25px;
     </property>
     <property name="text">
      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot;font-size:40pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;TP6 Filtrage Numerique&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial'; font-size:40pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:36pt;&quot;&gt;TP Filtrage Numérique&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -491,7 +493,6 @@ p, li { white-space: pre-wrap; }
     <property name="font">
      <font>
       <family>Arial Black</family>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -602,7 +603,7 @@ font-size: 40px;
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_12">
+   <widget class="QLabel" name="USRP_LABEL">
     <property name="geometry">
      <rect>
       <x>1870</x>
@@ -610,6 +611,9 @@ font-size: 40px;
       <width>47</width>
       <height>191</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:red;</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Box</enum>
@@ -717,7 +721,6 @@ p, li { white-space: pre-wrap; }
     <property name="font">
      <font>
       <family>Arial Black</family>
-      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
@@ -892,6 +895,9 @@ p, li { white-space: pre-wrap; }
              <property name="wrapping">
               <bool>false</bool>
              </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
              <property name="correctionMode">
               <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
              </property>
@@ -905,14 +911,29 @@ p, li { white-space: pre-wrap; }
               <double>999.999000000000024</double>
              </property>
              <property name="value">
-              <double>100.000000000000000</double>
+              <double>1.000000000000000</double>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QComboBox" name="GBF_FREQ_SIGNAL_MULTIPLY">
-             <property name="placeholderText" stdset="0">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="editable">
+              <bool>false</bool>
+             </property>
+             <property name="currentText">
+              <string notr="true">kHz</string>
+             </property>
+             <property name="currentIndex">
+              <number>1</number>
+             </property>
+             <property name="placeholderText">
               <string/>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
              </property>
              <item>
               <property name="text">
@@ -970,11 +991,17 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <widget class="QDoubleSpinBox" name="GBF_AMP_SIGNAL">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="wrapping">
             <bool>true</bool>
            </property>
            <property name="frame">
             <bool>true</bool>
+           </property>
+           <property name="readOnly">
+            <bool>false</bool>
            </property>
            <property name="specialValueText">
             <string/>
@@ -985,17 +1012,20 @@ p, li { white-space: pre-wrap; }
            <property name="suffix">
             <string>V</string>
            </property>
+           <property name="decimals">
+            <number>3</number>
+           </property>
            <property name="minimum">
-            <double>-10.000000000000000</double>
+            <double>0.001000000000000</double>
            </property>
            <property name="maximum">
-            <double>10.000000000000000</double>
+            <double>0.100000000000000</double>
            </property>
            <property name="singleStep">
             <double>0.100000000000000</double>
            </property>
            <property name="value">
-            <double>1.000000000000000</double>
+            <double>0.001000000000000</double>
            </property>
           </widget>
          </item>
@@ -1049,7 +1079,7 @@ p, li { white-space: pre-wrap; }
               <double>999.999000000000024</double>
              </property>
              <property name="value">
-              <double>32.000000000000000</double>
+              <double>500.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -1058,7 +1088,7 @@ p, li { white-space: pre-wrap; }
              <property name="currentIndex">
               <number>1</number>
              </property>
-             <property name="placeholderText" stdset="0">
+             <property name="placeholderText">
               <string/>
              </property>
              <item>
@@ -1139,7 +1169,7 @@ p, li { white-space: pre-wrap; }
       <x>640</x>
       <y>690</y>
       <width>681</width>
-      <height>444</height>
+      <height>503</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1351,20 +1381,23 @@ QCheckBox#FORWARD_BTN::indicator{
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_9">
            <item>
-            <spacer name="verticalSpacer_11">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+            <widget class="QLabel" name="label_12">
+             <property name="text">
+              <string>Filtre windows style: Fenetre Rectangulaire</string>
              </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Minimum</enum>
+             <property name="textFormat">
+              <enum>Qt::PlainText</enum>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
+             <property name="scaledContents">
+              <bool>false</bool>
              </property>
-            </spacer>
+             <property name="alignment">
+              <set>Qt::AlignHCenter|Qt::AlignTop</set>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::NoTextInteraction</set>
+             </property>
+            </widget>
            </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -1550,7 +1583,629 @@ QCheckBox#FORWARD_BTN::indicator{
            <property name="spacing">
             <number>0</number>
            </property>
-           <item row="1" column="0">
+           <item row="0" column="0" colspan="3">
+            <spacer name="verticalSpacer_19">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Minimum</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>5</width>
+               <height>15</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="2" column="1">
+            <widget class="Line" name="line_30">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>248</height>
+              </size>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
+             </property>
+             <property name="lineWidth">
+              <number>4</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <layout class="QVBoxLayout" name="verticalLayout_23">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <layout class="QFormLayout" name="formLayout_2">
+               <property name="sizeConstraint">
+                <enum>QLayout::SetNoConstraint</enum>
+               </property>
+               <property name="fieldGrowthPolicy">
+                <enum>QFormLayout::ExpandingFieldsGrow</enum>
+               </property>
+               <property name="rowWrapPolicy">
+                <enum>QFormLayout::WrapAllRows</enum>
+               </property>
+               <property name="labelAlignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               </property>
+               <property name="formAlignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               </property>
+               <property name="horizontalSpacing">
+                <number>0</number>
+               </property>
+               <property name="verticalSpacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <item row="0" column="0" colspan="2">
+                <widget class="Line" name="line_27">
+                 <property name="minimumSize">
+                  <size>
+                   <width>75</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <kerning>false</kerning>
+                  </font>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Plain</enum>
+                 </property>
+                 <property name="lineWidth">
+                  <number>2</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0" colspan="2">
+                <layout class="QFormLayout" name="formLayout">
+                 <property name="fieldGrowthPolicy">
+                  <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+                 </property>
+                 <property name="rowWrapPolicy">
+                  <enum>QFormLayout::DontWrapRows</enum>
+                 </property>
+                 <property name="labelAlignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <property name="formAlignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                 <property name="horizontalSpacing">
+                  <number>0</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>0</number>
+                 </property>
+                 <item row="0" column="0" colspan="2">
+                  <widget class="QLabel" name="label_31">
+                   <property name="text">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Frequence de coupure 1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>true</bool>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0" colspan="2">
+                  <layout class="QHBoxLayout" name="horizontalLayout_14">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>5</number>
+                   </property>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="FILTRE_FIR_FREQ_H">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>150</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="wrapping">
+                      <bool>false</bool>
+                     </property>
+                     <property name="frame">
+                      <bool>true</bool>
+                     </property>
+                     <property name="readOnly">
+                      <bool>false</bool>
+                     </property>
+                     <property name="buttonSymbols">
+                      <enum>QAbstractSpinBox::UpDownArrows</enum>
+                     </property>
+                     <property name="correctionMode">
+                      <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
+                     </property>
+                     <property name="showGroupSeparator" stdset="0">
+                      <bool>true</bool>
+                     </property>
+                     <property name="decimals">
+                      <number>3</number>
+                     </property>
+                     <property name="minimum">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>999.999000000000024</double>
+                     </property>
+                     <property name="value">
+                      <double>100.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <spacer name="horizontalSpacer_12">
+                     <property name="orientation">
+                      <enum>Qt::Horizontal</enum>
+                     </property>
+                     <property name="sizeType">
+                      <enum>QSizePolicy::Fixed</enum>
+                     </property>
+                     <property name="sizeHint" stdset="0">
+                      <size>
+                       <width>1</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </spacer>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="FILTRE_FIR_FREQ_H_Multiply">
+                     <property name="minimumSize">
+                      <size>
+                       <width>10</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="currentText">
+                      <string>kHz</string>
+                     </property>
+                     <property name="currentIndex">
+                      <number>1</number>
+                     </property>
+                     <property name="placeholderText">
+                      <string/>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>kHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>MHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>GHz</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="2" column="0">
+                  <spacer name="verticalSpacer_21">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>5</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item row="4" column="0" colspan="2">
+                <widget class="Line" name="line_28">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Plain</enum>
+                 </property>
+                 <property name="lineWidth">
+                  <number>2</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0" colspan="2">
+                <widget class="QLabel" name="label_33">
+                 <property name="text">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Frequence de coupure 2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="textFormat">
+                  <enum>Qt::RichText</enum>
+                 </property>
+                 <property name="scaledContents">
+                  <bool>true</bool>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0" colspan="2">
+                <layout class="QHBoxLayout" name="horizontalLayout_15">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>5</number>
+                 </property>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="FILTRE_FIR_FREQ_L">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>150</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="wrapping">
+                    <bool>false</bool>
+                   </property>
+                   <property name="correctionMode">
+                    <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
+                   </property>
+                   <property name="showGroupSeparator" stdset="0">
+                    <bool>false</bool>
+                   </property>
+                   <property name="decimals">
+                    <number>3</number>
+                   </property>
+                   <property name="minimum">
+                    <double>1.000000000000000</double>
+                   </property>
+                   <property name="maximum">
+                    <double>999.999000000000024</double>
+                   </property>
+                   <property name="value">
+                    <double>50.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="FILTRE_FIR_FREQ_L_Multiply">
+                   <property name="minimumSize">
+                    <size>
+                     <width>10</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="currentText">
+                    <string>kHz</string>
+                   </property>
+                   <property name="currentIndex">
+                    <number>1</number>
+                   </property>
+                   <property name="placeholderText">
+                    <string/>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>Hz</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>kHz</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>MHz</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>GHz</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="9" column="0" colspan="2">
+                <widget class="Line" name="line_29">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Plain</enum>
+                 </property>
+                 <property name="lineWidth">
+                  <number>2</number>
+                 </property>
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="0" colspan="2">
+                <layout class="QVBoxLayout" name="GRIDOU_2">
+                 <item>
+                  <spacer name="verticalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>5</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_34">
+                   <property name="text">
+                    <string>Largeur de la bande de transition</string>
+                   </property>
+                   <property name="scaledContents">
+                    <bool>true</bool>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                   </property>
+                   <property name="wordWrap">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_17">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>5</number>
+                   </property>
+                   <item>
+                    <widget class="QDoubleSpinBox" name="FILTRE_FIR_FREQ_TRANSI">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>150</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="wrapping">
+                      <bool>false</bool>
+                     </property>
+                     <property name="correctionMode">
+                      <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
+                     </property>
+                     <property name="showGroupSeparator" stdset="0">
+                      <bool>false</bool>
+                     </property>
+                     <property name="decimals">
+                      <number>3</number>
+                     </property>
+                     <property name="minimum">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>999.999000000000024</double>
+                     </property>
+                     <property name="value">
+                      <double>10.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QComboBox" name="FILTRE_FIR_FREQ_TRANSI_Multiply">
+                     <property name="maximumSize">
+                      <size>
+                       <width>50</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="currentText">
+                      <string>kHz</string>
+                     </property>
+                     <property name="currentIndex">
+                      <number>1</number>
+                     </property>
+                     <property name="placeholderText">
+                      <string/>
+                     </property>
+                     <item>
+                      <property name="text">
+                       <string>Hz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>kHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>MHz</string>
+                      </property>
+                     </item>
+                     <item>
+                      <property name="text">
+                       <string>GHz</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_23">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Fixed</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>5</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item row="5" column="0">
+                <spacer name="verticalSpacer_8">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>5</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="8" column="1">
+                <spacer name="verticalSpacer_24">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>5</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item row="1" column="0">
+                <spacer name="verticalSpacer_35">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>20</width>
+                   <height>5</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="Line" name="line_31">
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Plain</enum>
+               </property>
+               <property name="lineWidth">
+                <number>2</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="0">
             <layout class="QVBoxLayout" name="verticalLayout_24">
              <property name="spacing">
               <number>0</number>
@@ -1689,615 +2344,15 @@ QCheckBox#FORWARD_BTN::indicator{
              </item>
             </layout>
            </item>
-           <item row="1" column="1">
-            <widget class="Line" name="line_30">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>250</height>
-              </size>
-             </property>
-             <property name="layoutDirection">
-              <enum>Qt::LeftToRight</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Plain</enum>
-             </property>
-             <property name="lineWidth">
-              <number>4</number>
-             </property>
+           <item row="3" column="1">
+            <spacer name="verticalSpacer_11">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <layout class="QVBoxLayout" name="verticalLayout_23">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <item>
-              <layout class="QFormLayout" name="formLayout_2">
-               <property name="sizeConstraint">
-                <enum>QLayout::SetNoConstraint</enum>
-               </property>
-               <property name="fieldGrowthPolicy">
-                <enum>QFormLayout::ExpandingFieldsGrow</enum>
-               </property>
-               <property name="rowWrapPolicy">
-                <enum>QFormLayout::WrapAllRows</enum>
-               </property>
-               <property name="labelAlignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-               </property>
-               <property name="formAlignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-               </property>
-               <property name="horizontalSpacing">
-                <number>0</number>
-               </property>
-               <property name="verticalSpacing">
-                <number>0</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <item row="0" column="0" colspan="2">
-                <widget class="Line" name="line_27">
-                 <property name="minimumSize">
-                  <size>
-                   <width>75</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <kerning>false</kerning>
-                  </font>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Plain</enum>
-                 </property>
-                 <property name="lineWidth">
-                  <number>2</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0" colspan="2">
-                <layout class="QFormLayout" name="formLayout">
-                 <property name="fieldGrowthPolicy">
-                  <enum>QFormLayout::FieldsStayAtSizeHint</enum>
-                 </property>
-                 <property name="rowWrapPolicy">
-                  <enum>QFormLayout::DontWrapRows</enum>
-                 </property>
-                 <property name="labelAlignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                 <property name="formAlignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                 <property name="horizontalSpacing">
-                  <number>0</number>
-                 </property>
-                 <property name="verticalSpacing">
-                  <number>0</number>
-                 </property>
-                 <item row="0" column="0" colspan="2">
-                  <widget class="QLabel" name="label_31">
-                   <property name="text">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Frequence de coupure haute&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                   </property>
-                   <property name="scaledContents">
-                    <bool>true</bool>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0" colspan="2">
-                  <layout class="QHBoxLayout" name="horizontalLayout_14">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>5</number>
-                   </property>
-                   <item>
-                    <widget class="QDoubleSpinBox" name="FILTRE_FIR_FREQ_H">
-                     <property name="minimumSize">
-                      <size>
-                       <width>60</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>150</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="wrapping">
-                      <bool>false</bool>
-                     </property>
-                     <property name="frame">
-                      <bool>true</bool>
-                     </property>
-                     <property name="buttonSymbols">
-                      <enum>QAbstractSpinBox::UpDownArrows</enum>
-                     </property>
-                     <property name="correctionMode">
-                      <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-                     </property>
-                     <property name="showGroupSeparator" stdset="0">
-                      <bool>true</bool>
-                     </property>
-                     <property name="decimals">
-                      <number>3</number>
-                     </property>
-                     <property name="minimum">
-                      <double>1.000000000000000</double>
-                     </property>
-                     <property name="maximum">
-                      <double>999.999000000000024</double>
-                     </property>
-                     <property name="value">
-                      <double>1.000000000000000</double>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_12">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeType">
-                      <enum>QSizePolicy::Fixed</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>1</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
-                    <widget class="QComboBox" name="FILTRE_FIR_FREQ_H_Multiply">
-                     <property name="minimumSize">
-                      <size>
-                       <width>10</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>50</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="currentText">
-                      <string>Hz</string>
-                     </property>
-                     <property name="currentIndex">
-                      <number>0</number>
-                     </property>
-                     <property name="placeholderText" stdset="0">
-                      <string/>
-                     </property>
-                     <item>
-                      <property name="text">
-                       <string>Hz</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>kHz</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>MHz</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>GHz</string>
-                      </property>
-                     </item>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="2" column="0">
-                  <spacer name="verticalSpacer_21">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>5</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-               <item row="4" column="0" colspan="2">
-                <widget class="Line" name="line_28">
-                 <property name="minimumSize">
-                  <size>
-                   <width>50</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Plain</enum>
-                 </property>
-                 <property name="lineWidth">
-                  <number>2</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0" colspan="2">
-                <widget class="QLabel" name="label_33">
-                 <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Frequence de coupure basse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                 <property name="textFormat">
-                  <enum>Qt::RichText</enum>
-                 </property>
-                 <property name="scaledContents">
-                  <bool>true</bool>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignHCenter|Qt::AlignTop</set>
-                 </property>
-                 <property name="wordWrap">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="0" colspan="2">
-                <layout class="QHBoxLayout" name="horizontalLayout_15">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <property name="leftMargin">
-                  <number>5</number>
-                 </property>
-                 <item>
-                  <widget class="QDoubleSpinBox" name="FILTRE_FIR_FREQ_L">
-                   <property name="minimumSize">
-                    <size>
-                     <width>60</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>150</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="wrapping">
-                    <bool>false</bool>
-                   </property>
-                   <property name="correctionMode">
-                    <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-                   </property>
-                   <property name="showGroupSeparator" stdset="0">
-                    <bool>false</bool>
-                   </property>
-                   <property name="decimals">
-                    <number>3</number>
-                   </property>
-                   <property name="minimum">
-                    <double>1.000000000000000</double>
-                   </property>
-                   <property name="maximum">
-                    <double>999.999000000000024</double>
-                   </property>
-                   <property name="value">
-                    <double>1.000000000000000</double>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QComboBox" name="FILTRE_FIR_FREQ_L_Multiply">
-                   <property name="minimumSize">
-                    <size>
-                     <width>10</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="currentIndex">
-                    <number>0</number>
-                   </property>
-                   <property name="placeholderText" stdset="0">
-                    <string/>
-                   </property>
-                   <item>
-                    <property name="text">
-                     <string>Hz</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>kHz</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>MHz</string>
-                    </property>
-                   </item>
-                   <item>
-                    <property name="text">
-                     <string>GHz</string>
-                    </property>
-                   </item>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item row="9" column="0" colspan="2">
-                <widget class="Line" name="line_29">
-                 <property name="minimumSize">
-                  <size>
-                   <width>50</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Plain</enum>
-                 </property>
-                 <property name="lineWidth">
-                  <number>2</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="10" column="0" colspan="2">
-                <layout class="QVBoxLayout" name="GRIDOU_2">
-                 <item>
-                  <spacer name="verticalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>5</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_34">
-                   <property name="text">
-                    <string>Largeur de la bande de transition</string>
-                   </property>
-                   <property name="scaledContents">
-                    <bool>true</bool>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignHCenter|Qt::AlignTop</set>
-                   </property>
-                   <property name="wordWrap">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_17">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>5</number>
-                   </property>
-                   <item>
-                    <widget class="QDoubleSpinBox" name="FILTRE_FIR_FREQ_TRANSI">
-                     <property name="minimumSize">
-                      <size>
-                       <width>60</width>
-                       <height>0</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>150</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="wrapping">
-                      <bool>false</bool>
-                     </property>
-                     <property name="correctionMode">
-                      <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-                     </property>
-                     <property name="showGroupSeparator" stdset="0">
-                      <bool>false</bool>
-                     </property>
-                     <property name="decimals">
-                      <number>3</number>
-                     </property>
-                     <property name="minimum">
-                      <double>1.000000000000000</double>
-                     </property>
-                     <property name="maximum">
-                      <double>999.999000000000024</double>
-                     </property>
-                     <property name="value">
-                      <double>1.000000000000000</double>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QComboBox" name="FILTRE_FIR_FREQ_TRANSI_Multiply">
-                     <property name="maximumSize">
-                      <size>
-                       <width>50</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="currentIndex">
-                      <number>0</number>
-                     </property>
-                     <property name="placeholderText" stdset="0">
-                      <string/>
-                     </property>
-                     <item>
-                      <property name="text">
-                       <string>Hz</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>kHz</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>MHz</string>
-                      </property>
-                     </item>
-                     <item>
-                      <property name="text">
-                       <string>GHz</string>
-                      </property>
-                     </item>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <spacer name="verticalSpacer_23">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>5</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                </layout>
-               </item>
-               <item row="5" column="0">
-                <spacer name="verticalSpacer_8">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>5</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="8" column="1">
-                <spacer name="verticalSpacer_24">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>5</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item row="1" column="0">
-                <spacer name="verticalSpacer_35">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Fixed</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>5</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="Line" name="line_31">
-               <property name="minimumSize">
-                <size>
-                 <width>50</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Plain</enum>
-               </property>
-               <property name="lineWidth">
-                <number>2</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="0" column="0" colspan="3">
-            <spacer name="verticalSpacer_19">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Minimum</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>5</width>
-               <height>15</height>
+               <width>0</width>
+               <height>40</height>
               </size>
              </property>
             </spacer>
@@ -2457,6 +2512,9 @@ QCheckBox#FEEDBACK_BTN::indicator{
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_11">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
+           </property>
            <item>
             <widget class="Line" name="line_43">
              <property name="minimumSize">
@@ -2477,20 +2535,23 @@ QCheckBox#FEEDBACK_BTN::indicator{
             </widget>
            </item>
            <item>
-            <spacer name="verticalSpacer_32">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+            <widget class="QLabel" name="label_20">
+             <property name="text">
+              <string>Filtre windows style: Fenetre Rectangulaire</string>
              </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Minimum</enum>
+             <property name="textFormat">
+              <enum>Qt::PlainText</enum>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>20</height>
-              </size>
+             <property name="scaledContents">
+              <bool>false</bool>
              </property>
-            </spacer>
+             <property name="alignment">
+              <set>Qt::AlignHCenter|Qt::AlignTop</set>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::NoTextInteraction</set>
+             </property>
+            </widget>
            </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -2638,6 +2699,44 @@ QCheckBox#FEEDBACK_BTN::indicator{
            <property name="spacing">
             <number>0</number>
            </property>
+           <item row="1" column="1">
+            <widget class="Line" name="line_42">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>248</height>
+              </size>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
+             </property>
+             <property name="lineWidth">
+              <number>4</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="3">
+            <spacer name="verticalSpacer_31">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Minimum</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>5</width>
+               <height>15</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
            <item row="1" column="0">
             <layout class="QVBoxLayout" name="verticalLayout_25">
              <property name="spacing">
@@ -2855,7 +2954,7 @@ QCheckBox#FEEDBACK_BTN::indicator{
                  <item row="0" column="0" colspan="2">
                   <widget class="QLabel" name="label_36">
                    <property name="text">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Frequence de coupure haute&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Frequence de coupure 1&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                    <property name="scaledContents">
                     <bool>true</bool>
@@ -2915,7 +3014,7 @@ QCheckBox#FEEDBACK_BTN::indicator{
                       <double>999.999000000000024</double>
                      </property>
                      <property name="value">
-                      <double>1.000000000000000</double>
+                      <double>100.000000000000000</double>
                      </property>
                     </widget>
                    </item>
@@ -2950,12 +3049,12 @@ QCheckBox#FEEDBACK_BTN::indicator{
                       </size>
                      </property>
                      <property name="currentText">
-                      <string>Hz</string>
+                      <string>kHz</string>
                      </property>
                      <property name="currentIndex">
-                      <number>0</number>
+                      <number>1</number>
                      </property>
-                     <property name="placeholderText" stdset="0">
+                     <property name="placeholderText">
                       <string/>
                      </property>
                      <item>
@@ -3022,7 +3121,7 @@ QCheckBox#FEEDBACK_BTN::indicator{
                <item row="6" column="0" colspan="2">
                 <widget class="QLabel" name="label_37">
                  <property name="text">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Frequence de coupure basse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Frequence de coupure 2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                  <property name="textFormat">
                   <enum>Qt::RichText</enum>
@@ -3079,7 +3178,7 @@ QCheckBox#FEEDBACK_BTN::indicator{
                     <double>999.999000000000024</double>
                    </property>
                    <property name="value">
-                    <double>1.000000000000000</double>
+                    <double>50.000000000000000</double>
                    </property>
                   </widget>
                  </item>
@@ -3097,10 +3196,13 @@ QCheckBox#FEEDBACK_BTN::indicator{
                      <height>16777215</height>
                     </size>
                    </property>
-                   <property name="currentIndex">
-                    <number>0</number>
+                   <property name="currentText">
+                    <string>kHz</string>
                    </property>
-                   <property name="placeholderText" stdset="0">
+                   <property name="currentIndex">
+                    <number>1</number>
+                   </property>
+                   <property name="placeholderText">
                     <string/>
                    </property>
                    <item>
@@ -3221,7 +3323,7 @@ QCheckBox#FEEDBACK_BTN::indicator{
                       <double>999.999000000000024</double>
                      </property>
                      <property name="value">
-                      <double>1.000000000000000</double>
+                      <double>10.000000000000000</double>
                      </property>
                     </widget>
                    </item>
@@ -3233,10 +3335,13 @@ QCheckBox#FEEDBACK_BTN::indicator{
                        <height>16777215</height>
                       </size>
                      </property>
-                     <property name="currentIndex">
-                      <number>0</number>
+                     <property name="currentText">
+                      <string>kHz</string>
                      </property>
-                     <property name="placeholderText" stdset="0">
+                     <property name="currentIndex">
+                      <number>1</number>
+                     </property>
+                     <property name="placeholderText">
                       <string/>
                      </property>
                      <item>
@@ -3352,43 +3457,18 @@ QCheckBox#FEEDBACK_BTN::indicator{
              </item>
             </layout>
            </item>
-           <item row="0" column="0" colspan="3">
-            <spacer name="verticalSpacer_31">
+           <item row="2" column="1">
+            <spacer name="verticalSpacer_15">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Minimum</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>5</width>
-               <height>15</height>
+               <width>0</width>
+               <height>40</height>
               </size>
              </property>
             </spacer>
-           </item>
-           <item row="1" column="1">
-            <widget class="Line" name="line_42">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>250</height>
-              </size>
-             </property>
-             <property name="layoutDirection">
-              <enum>Qt::LeftToRight</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Plain</enum>
-             </property>
-             <property name="lineWidth">
-              <number>4</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-            </widget>
            </item>
           </layout>
          </item>
@@ -3863,7 +3943,7 @@ QCheckBox#FEEDBACK_BTN::indicator{
               <double>999.999000000000024</double>
              </property>
              <property name="value">
-              <double>70.000000000000000</double>
+              <double>120.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -3884,7 +3964,7 @@ QCheckBox#FEEDBACK_BTN::indicator{
              <property name="currentIndex">
               <number>2</number>
              </property>
-             <property name="placeholderText" stdset="0">
+             <property name="placeholderText">
               <string/>
              </property>
              <item>
@@ -3975,6 +4055,9 @@ QCheckBox#FEEDBACK_BTN::indicator{
            </item>
            <item>
             <widget class="QDoubleSpinBox" name="USRP_SAMPLE_BASE">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="minimumSize">
               <size>
                <width>150</width>
@@ -3996,6 +4079,9 @@ QCheckBox#FEEDBACK_BTN::indicator{
              <property name="frame">
               <bool>true</bool>
              </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
              <property name="buttonSymbols">
               <enum>QAbstractSpinBox::PlusMinus</enum>
              </property>
@@ -4015,12 +4101,15 @@ QCheckBox#FEEDBACK_BTN::indicator{
               <double>999.990000000000009</double>
              </property>
              <property name="value">
-              <double>64.000000000000000</double>
+              <double>500.000000000000000</double>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QComboBox" name="USRP_SAMPLE_MULTY">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="minimumSize">
               <size>
                <width>75</width>
@@ -4036,8 +4125,11 @@ QCheckBox#FEEDBACK_BTN::indicator{
              <property name="currentIndex">
               <number>1</number>
              </property>
-             <property name="placeholderText" stdset="0">
+             <property name="placeholderText">
               <string/>
+             </property>
+             <property name="frame">
+              <bool>true</bool>
              </property>
              <item>
               <property name="text">
@@ -4117,17 +4209,23 @@ QCheckBox#FEEDBACK_BTN::indicator{
                <height>16777215</height>
               </size>
              </property>
+             <property name="readOnly">
+              <bool>false</bool>
+             </property>
              <property name="correctionMode">
               <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
              </property>
              <property name="suffix">
               <string> dB</string>
              </property>
+             <property name="decimals">
+              <number>0</number>
+             </property>
              <property name="maximum">
-              <double>89.750000000000000</double>
+              <double>50.000000000000000</double>
              </property>
              <property name="value">
-              <double>0.000000000000000</double>
+              <double>50.000000000000000</double>
              </property>
             </widget>
            </item>
@@ -4415,7 +4513,7 @@ font-size:20px;</string>
      <rect>
       <x>725</x>
       <y>255</y>
-      <width>56</width>
+      <width>46</width>
       <height>5</height>
      </rect>
     </property>
@@ -4434,7 +4532,7 @@ font-size:20px;</string>
      <rect>
       <x>703</x>
       <y>480</y>
-      <width>78</width>
+      <width>68</width>
       <height>20</height>
      </rect>
     </property>
@@ -4586,9 +4684,9 @@ font-size:20px;</string>
    <widget class="QWidget" name="gridLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>780</x>
+      <x>770</x>
       <y>170</y>
-      <width>401</width>
+      <width>411</width>
       <height>191</height>
      </rect>
     </property>
@@ -4604,9 +4702,9 @@ font-size:20px;</string>
    <widget class="QWidget" name="gridLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>780</x>
+      <x>770</x>
       <y>380</y>
-      <width>401</width>
+      <width>411</width>
       <height>191</height>
      </rect>
     </property>
@@ -4680,7 +4778,7 @@ font-size:20px;</string>
    <zorder>label_2</zorder>
    <zorder>TITRE</zorder>
    <zorder>line_15</zorder>
-   <zorder>label_12</zorder>
+   <zorder>USRP_LABEL</zorder>
    <zorder>line_16</zorder>
    <zorder>verticalLayoutWidget</zorder>
    <zorder>verticalLayoutWidget_2</zorder>
@@ -4704,6 +4802,9 @@ font-size:20px;</string>
    <zorder>gridLayoutWidget_6</zorder>
   </widget>
   <action name="ON_OFF_0">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>ON</string>
    </property>
