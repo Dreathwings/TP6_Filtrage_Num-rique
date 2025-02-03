@@ -17,6 +17,7 @@ class FILTRE():
         self.FORWARD_F_LOW = F_LOW
         self.FORWARD_F_HIGH = F_HIGH
         self.FORWARD_F_TRANSI = SAMPLE_RATE/8
+        self.FORWARD_ATTENUATION=0
         self.FORWARD_WINDOW = window.WIN_RECTANGULAR    # type: ignore
         self.FORWARD_BETA = 6.76
         self.FORWARD_file = file
@@ -29,6 +30,7 @@ class FILTRE():
         self.FEEDBACK_F_LOW = F_LOW
         self.FEEDBACK_F_HIGH = F_HIGH
         self.FEEDBACK_F_TRANSI = SAMPLE_RATE/8
+        self.FEEDBACK_ATTENUATION=0
         self.FEEDBACK_WINDOW = window.WIN_RECTANGULAR    # type: ignore
         self.FEEDBACK_BETA = 6.76
         self.FEEDBACK_file = file
@@ -40,7 +42,7 @@ class FILTRE():
         self.Forward_plot_init()
         self.Feedback_plot_init()
         
-    def Forward_update(self,mode=None,f_low=None,f_high=None,sample_rate=None,f_transi=None):
+    def Forward_update(self,mode=None,f_low=None,f_high=None,sample_rate=None,f_transi=None,attenuation=None):
         if mode != None:
             self.FORWARD_mode = mode
         if f_low != None:
@@ -51,6 +53,8 @@ class FILTRE():
             self.FORWARD_SAMPLE_RATE = sample_rate
         if f_transi != None:
             self.FORWARD_F_TRANSI = f_transi
+        if attenuation != None:
+            self.FORWARD_ATTENUATION = attenuation
         if self.FORWARD_ON_OFF == 2:
             self.FORWARD_TAPS = [1]
         else:
@@ -58,7 +62,7 @@ class FILTRE():
         self.FILTRE.set_taps(self.FORWARD_TAPS,self.FEEDBACK_TAPS)
         self.Forward_plot_update()
 
-    def Feedback_update(self,mode=None,f_low=None,f_high=None,sample_rate=None,f_transi=None):
+    def Feedback_update(self,mode=None,f_low=None,f_high=None,sample_rate=None,f_transi=None,attenuation=None):
         if mode != None:
             self.FEEDBACK_mode = mode
         if f_low != None:
@@ -69,6 +73,8 @@ class FILTRE():
             self.FEEDBACK_SAMPLE_RATE = sample_rate
         if f_transi != None:
             self.FEEDBACK_F_TRANSI = f_transi
+        if attenuation != None:
+            self.FEEDBACK_ATTENUATION = attenuation
         if self.FEEDBACK_ON_OFF == 2:
             self.FEEDBACK_TAPS = [1]
         else:
@@ -80,19 +86,18 @@ class FILTRE():
     def Forward_Current_Taps(self):
         try:
             if self.FORWARD_mode == 'PASSE-BAS':
-                return firdes.low_pass(self.FORWARD_GAIN,self.FORWARD_SAMPLE_RATE,
+                return firdes.low_pass_2(self.FORWARD_GAIN,self.FORWARD_SAMPLE_RATE,
                                     self.FORWARD_F_HIGH,
                                     self.FORWARD_F_TRANSI,
+                                    self.FORWARD_ATTENUATION,
                                     self.FORWARD_WINDOW,
                                     self.FORWARD_BETA)
             elif self.FORWARD_mode == 'PASSE-HAUT':
-                return firdes.high_pass(self.FORWARD_GAIN,self.FORWARD_SAMPLE_RATE,self.FORWARD_F_HIGH,self.FORWARD_F_TRANSI,self.FORWARD_WINDOW,self.FORWARD_BETA)
+                return firdes.high_pass_2(self.FORWARD_GAIN,self.FORWARD_SAMPLE_RATE,self.FORWARD_F_HIGH,self.FORWARD_F_TRANSI,self.FORWARD_ATTENUATION,self.FORWARD_WINDOW,self.FORWARD_BETA)
             elif self.FORWARD_mode == 'PASSE-BANDE':
-                return firdes.band_pass(self.FORWARD_GAIN,self.FORWARD_SAMPLE_RATE, self.FORWARD_F_HIGH,self.FORWARD_F_LOW,self.FORWARD_F_TRANSI,self.FORWARD_WINDOW,self.FORWARD_BETA)
+                return firdes.band_pass_2(self.FORWARD_GAIN,self.FORWARD_SAMPLE_RATE, self.FORWARD_F_HIGH,self.FORWARD_F_LOW,self.FORWARD_F_TRANSI,self.FORWARD_ATTENUATION,self.FORWARD_WINDOW,self.FORWARD_BETA)
             elif self.FORWARD_mode == 'COUPE-BANDE':
-                return firdes.band_reject(self.FORWARD_GAIN,self.FORWARD_SAMPLE_RATE,self.FORWARD_F_HIGH,self.FORWARD_F_LOW, self.FORWARD_F_TRANSI,self.FORWARD_WINDOW,self.FORWARD_BETA)
-            elif self.FEEDBACK_mode == 'FILE':
-                return
+                return firdes.band_reject_2(self.FORWARD_GAIN,self.FORWARD_SAMPLE_RATE,self.FORWARD_F_HIGH,self.FORWARD_F_LOW, self.FORWARD_F_TRANSI,self.FORWARD_ATTENUATION,self.FORWARD_WINDOW,self.FORWARD_BETA)
             elif self.FORWARD_mode == 'FILE':
                 txt = open(self.FORWARD_file,"r").read()
                 if 'taps' in txt:

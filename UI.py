@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 from unittest import skip
-from PyQt5 import QtWidgets, uic, QtCore, Qt # type: ignore
+from PyQt5 import QtWidgets, uic, QtCore, QtGui,Qt # type: ignore
 from PyQt5.QtCore import pyqtSignal , QObject,pyqtSlot
 import math
 from FILTRE import FILTRE
@@ -18,7 +18,7 @@ from USRP import USRP
 class Communicate(QObject):
     closeApp = pyqtSignal()
 
-class Ui(QtWidgets.QMainWindow,gr.top_block):
+class Ui(QtWidgets.QMainWindow,gr.top_block,):
     def __init__(self):
         super(Ui, self).__init__()
         """gr.top_block.__init__(self, "TP6", catch_exceptions=True)"""
@@ -26,6 +26,8 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         #print(path_ui)
         uic.loadUi(path_ui, self)
         self.setWindowTitle("TP6 Filtrage Numérique")
+        self.setWindowIcon(QtGui.QIcon(os.path.abspath(__file__).replace('UI.py','/ressource/onde-sonore.png')))
+        self.setWindowModality(1)
         self.ScreenState = 0
         self.GBF_FREQ_SIGNAL = 1000
         self.GBF_AMP_SIGNAL = 0.001
@@ -58,6 +60,7 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         return out
     def getQWidget(self,name:str): return self.getObjet(QtWidgets.QWidget,name)
     def getQDoubleSpin(self,name:str): return self.getObjet(QtWidgets.QDoubleSpinBox,name)
+    def getQSpin(self,name:str): return self.getObjet(QtWidgets.QSpinBox,name)
     def getQLabel(self,name:str): return self.getObjet(QtWidgets.QLabel,name)
     def getQCheckBox(self,name:str):return self.getObjet(QtWidgets.QCheckBox,name)
     def getQComboBox(self, name:str):return self.getObjet(QtWidgets.QComboBox,name)
@@ -117,11 +120,13 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
             type ='FILE'
         else:
             type = self.Item_FILTRE_FORWARD_SHAPE.currentText().upper()
+            attenuation = self.Item_FILTRE_FORWARD_ATTENUATION.value()
         self.FILTRE.Forward_update(type,
                                 self.SPIN_X_COMBO(self.Item_FILTRE_FORWARD_FREQ_H.value(),self.Item_FILTRE_FORWARD_FREQ_H_Multiply.currentIndex()),
                                 self.SPIN_X_COMBO(self.Item_FILTRE_FORWARD_FREQ_L.value(),self.Item_FILTRE_FORWARD_FREQ_L_Multiply.currentIndex()),
                                 self.SPIN_X_COMBO(self.Item_GBF_SCAN_BASE.value(),self.Item_GBF_SCAN_MULTIPLY.currentIndex()),
-                                self.SPIN_X_COMBO(self.Item_FILTRE_FORWARD_TRANSI.value(),self.Item_FILTRE_FORWARD_TRANSI_Multiply.currentIndex()))
+                                self.SPIN_X_COMBO(self.Item_FILTRE_FORWARD_TRANSI.value(),self.Item_FILTRE_FORWARD_TRANSI_Multiply.currentIndex()),
+                                attenuation=attenuation)
         self.USRP_TIME_UI.GUI_SIGNAL.reset()
         self.PLOT_FORWARD.draw()
            
@@ -130,11 +135,13 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
             type ='FILE'
         else:
             type = self.Item_FILTRE_FEEDBACK_SHAPE.currentText().upper()
+            attenuation = self.Item_FILTRE_FORWARD_ATTENUATION.value()
         self.FILTRE.Feedback_update(type,
                                    self.SPIN_X_COMBO(self.Item_FILTRE_FEEDBACK_FREQ_H.value(),self.Item_FILTRE_FEEDBACK_FREQ_H_Multiply.currentIndex()),
                                    self.SPIN_X_COMBO(self.Item_FILTRE_FEEDBACK_FREQ_L.value(),self.Item_FILTRE_FEEDBACK_FREQ_L_Multiply.currentIndex()),
                                    self.SPIN_X_COMBO(self.Item_GBF_SCAN_BASE.value(),self.Item_GBF_SCAN_MULTIPLY.currentIndex()),
-                                   self.SPIN_X_COMBO(self.Item_FILTRE_FEEDBACK_TRANSI.value(),self.Item_FILTRE_FEEDBACK_TRANSI_Multiply.currentIndex()))
+                                   self.SPIN_X_COMBO(self.Item_FILTRE_FEEDBACK_TRANSI.value(),self.Item_FILTRE_FEEDBACK_TRANSI_Multiply.currentIndex()),
+                                   attenuation=attenuation)
         self.USRP_TIME_UI.GUI_SIGNAL.reset()
         self.PLOT_FEEDBACK.draw()
 
@@ -259,6 +266,7 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         self.Item_FILTRE_FORWARD_FREQ_L_Multiply = self.getQComboBox('FILTRE_FIR_FREQ_L_Multiply')
         self.Item_FILTRE_FORWARD_TRANSI = self.getQDoubleSpin('FILTRE_FIR_FREQ_TRANSI')
         self.Item_FILTRE_FORWARD_TRANSI_Multiply = self.getQComboBox('FILTRE_FIR_FREQ_TRANSI_Multiply')
+        self.Item_FILTRE_FORWARD_ATTENUATION = self.getQSpin('FILTRE_FIR_ATTENUATION')
         self.Item_FILTRE_FORWARD_PLOT = self.getQGridLayout('FILTRE_FIR_PLOT')
         self.PLOT_FORWARD = self.FILTRE.get_forward_widget()
         self.Item_FILTRE_FORWARD_PLOT.addWidget(self.PLOT_FORWARD)
@@ -273,6 +281,7 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
         self.Item_FILTRE_FEEDBACK_FREQ_L_Multiply = self.getQComboBox('FILTRE_IIR_FREQ_L_Multiply')
         self.Item_FILTRE_FEEDBACK_TRANSI = self.getQDoubleSpin('FILTRE_IIR_FREQ_TRANSI')
         self.Item_FILTRE_FEEDBACK_TRANSI_Multiply = self.getQComboBox('FILTRE_IIR_FREQ_TRANSI_Multiply')
+        self.Item_FILTRE_FEEDBACK_ATTENUATION = self.getQSpin('FILTRE_IIR_ATTENUATION')
         self.Item_FILTRE_FEEDBACK_PLOT = self.getQGridLayout('FILTRE_IIR_PLOT')
         self.PLOT_FEEDBACK = self.FILTRE.get_feedback_widget()
         self.Item_FILTRE_FEEDBACK_PLOT.addWidget(self.PLOT_FEEDBACK)
@@ -321,6 +330,7 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
 
         self.Item_FILTRE_FORWARD_TRANSI.valueChanged.connect(self.Filtre_Forward)
         self.Item_FILTRE_FORWARD_TRANSI_Multiply.currentIndexChanged.connect(self.Filtre_Forward)
+        self.Item_FILTRE_FORWARD_ATTENUATION.valueChanged.connect(self.Filtre_Forward)
         ###########
         ###########
         self.Item_FILTRE_FEEDBACK_BTN.stateChanged.connect(self.Filtre_Feedback_On_Off)
@@ -337,6 +347,7 @@ class Ui(QtWidgets.QMainWindow,gr.top_block):
 
         self.Item_FILTRE_FEEDBACK_TRANSI.valueChanged.connect(self.Filtre_Feedback)
         self.Item_FILTRE_FEEDBACK_TRANSI_Multiply.currentIndexChanged.connect(self.Filtre_Feedback)
+        self.Item_FILTRE_FEEDBACK_ATTENUATION.valueChanged.connect(self.Filtre_Feedback)
         ##########
 
         self.Item_USRP_PORTEUSE_BASE.valueChanged.connect(self.Usrp_Porteuse)
