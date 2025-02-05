@@ -4,7 +4,7 @@ from gnuradio import blocks
 from gnuradio import gr
 import random
 class GBF(gr.top_block):
-    __SHAPE = {'SINUS':analog.GR_SIN_WAVE,'COSINUS':analog.GR_COS_WAVE,'CARRE':analog.GR_SQR_WAVE,'TRIANGLE':analog.GR_TRI_WAVE,'DENT DE SCIE':analog.GR_SAW_WAVE,}# type: ignore
+    __SHAPE = {'SINUS':analog.GR_SIN_WAVE,'COSINUS':analog.GR_COS_WAVE,'CARRE':analog.GR_SQR_WAVE,'TRIANGLE':analog.GR_TRI_WAVE,'DENT DE SCIE':analog.GR_SAW_WAVE}# type: ignore
     def __init__(self,Forme:str,Freq:float,Amp:float,Rate:float,origine:float=0,phase:float=0) -> None:
         gr.top_block.__init__(self,"MAIN", catch_exceptions=True)
         
@@ -45,23 +45,21 @@ class GBF(gr.top_block):
                 self.SetSampleRate(self.SAMPLE_RATE)
     def SHAPE_TAGGEUR(self):
         return GBF.__SHAPE[self.SHAPE]
+    
     def SetFrequency(self,value):
         self.FREQUENCE = value
         self.SIGNAL.set_frequency(value)
+
     def SetWaveForm(self,value):
-        if self.SHAPE == 'CARRE':
-            self.SIGNAL.set_offset((-self.AMPLITUDE)/2)
-        else:
-            self.SIGNAL.set_offset(0)
         self.SIGNAL.set_waveform(value)
+        #self.SIGNAL.set_offset(self.AMPLITUDE) # type: ignore
+
     def SetAmplitude(self,value):
-        if self.SHAPE == 'CARRE':
-            self.SIGNAL.set_offset(-value/2)
-        else:
-            self.SIGNAL.set_offset(0)
         self.AMPLITUDE = value
         self.SIGNAL.set_amplitude(value)
         self.NOISE.set_amplitude(value)
+        #self.SIGNAL.set_offset(value) # type: ignore
+
     def SetSampleRate(self,value):
         self.SAMPLE_RATE = value
         self.SIGNAL.set_sampling_freq(value)

@@ -89,6 +89,7 @@ class Ui(QtWidgets.QMainWindow,gr.top_block,):
         self.GBF_FREQ_UI.setFreqCenter(self.GBF_FREQ_SIGNAL)
         self.USRP_FREQ_UI.setFreqCenter(self.GBF_FREQ_SIGNAL)
         self.GBF.update(FREQUENCE=self.GBF_FREQ_SIGNAL)
+        self.GBF_Freq_Scan()
     def GBF_Amp_Signal(self): 
         self.GBF_AMP_SIGNAL = self.Item_GBF_AMP_SIGNAL.value()
         self.GBF.update(AMPLITUDE=self.GBF_AMP_SIGNAL)
@@ -378,7 +379,8 @@ class Ui(QtWidgets.QMainWindow,gr.top_block,):
         ##########
         #/// VARIABLE ETAT UI
         self.ON_OFF_FM_STATE = self.ON_OFF_Switch()
-
+        self.GBF_Freq_Scan()
+        self.GBF_Freq_Signal()
         self.Filtre_Forward()
         self.Filtre_Feedback()
         self.Usrp_Sample()

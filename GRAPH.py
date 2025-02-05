@@ -123,18 +123,23 @@ class GRAPH(gr.top_block):
 
     def getWidget(self):
         return self.WIDGET_GUI_SIGNAL
+    
     def autoscale(self,state:bool):
         self.GUI_SIGNAL.enable_autoscale(state)
+
     def connecting(self,signal,ID=0):
         self.connect((signal,ID),(self.GUI_SIGNAL,ID))
+
     def starting(self):
         self.start()
+
     def setFreqCenter(self, freq):
         self.CENTRE_FREQ = freq
-        self.GUI_SIGNAL.set_frequency_range(self.CENTRE_FREQ,self.CENTRE_FREQ/2)
+        self.GUI_SIGNAL.set_frequency_range(0,self.CENTRE_FREQ)
+
     def setSampleRate(self,freq):
         self.SAMPLE_RATE = freq
         if self.TYPE == 'SIGNAL/TIME':
             self.GUI_SIGNAL.set_samp_rate(self.SAMPLE_RATE)
         elif self.TYPE == 'SIGNAL/FREQUENCE':
-            self.GUI_SIGNAL.set_frequency_range(self.CENTRE_FREQ,self.SAMPLE_RATE*2)
+            self.GUI_SIGNAL.set_frequency_range(0,self.SAMPLE_RATE)

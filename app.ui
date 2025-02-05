@@ -899,7 +899,7 @@ p, li { white-space: pre-wrap; }
               <bool>false</bool>
              </property>
              <property name="readOnly">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="correctionMode">
               <enum>QAbstractSpinBox::CorrectToNearestValue</enum>
@@ -909,6 +909,9 @@ p, li { white-space: pre-wrap; }
              </property>
              <property name="decimals">
               <number>0</number>
+             </property>
+             <property name="minimum">
+              <double>1.000000000000000</double>
              </property>
              <property name="maximum">
               <double>1000.000000000000000</double>
@@ -3916,7 +3919,7 @@ QCheckBox#FEEDBACK_BTN::indicator{
             </size>
            </property>
            <property name="text">
-            <string>USRF FM</string>
+            <string>USRF OUTP ON</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
